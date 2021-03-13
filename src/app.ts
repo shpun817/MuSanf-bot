@@ -1,14 +1,13 @@
 import Discord = require('discord.js');
+import { parseMessage } from './parse_message';
 require('dotenv').config();
 
-const client = new Discord.Client();
+export const client = new Discord.Client();
 
-client.on('ready', () => {
+client.once('ready', () => {
     console.log("MuSanf is ready")
 });
 
-client.on('message', (msg: Discord.Message) => {
-    if (msg.content === 'Hello') msg.reply('Hi');
-});
+client.on('message', parseMessage);
 
 client.login(process.env.BOT_TOKEN);
