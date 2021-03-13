@@ -5,7 +5,7 @@ require('dotenv').config();
 export const client = new Discord.Client();
 
 client.once('ready', () => {
-    console.log("MuSanf is ready")
+    console.log("MuSanf is ready");
 });
 
 client.on('message', parseMessage);
