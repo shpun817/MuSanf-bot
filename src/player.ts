@@ -36,6 +36,7 @@ export class Player {
                 await msg.channel.send("Some error encountered in playing song.");
                 console.error(err);
             });
+        this.dispatcher.setVolume(4 / 100);
         await msg.channel.send(`Now Playing: **${nextSong.title}**`);
     }
 }
