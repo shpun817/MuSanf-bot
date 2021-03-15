@@ -1,4 +1,5 @@
 import Discord = require('discord.js');
+import { Player } from './player';
 
 export async function joinVoiceChannel(msg: Discord.Message) {
     const userVoiceChannel = msg.member.voice.channel;
@@ -14,5 +15,5 @@ export async function joinVoiceChannel(msg: Discord.Message) {
         );
     }
     console.log("Currently in", msg.client.voice.connections.size, "voice channels");
-    return userVoiceChannel.join();
+    Player.voiceChannelConnection = await userVoiceChannel.join();
 }

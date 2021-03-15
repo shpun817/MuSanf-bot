@@ -1,24 +1,21 @@
 import { Song } from "./song";
+import Discord = require('discord.js');
 
-export class SongQueue implements IQueue<Song> {
-    // Singleton pattern
-    private static instance: SongQueue = null;
-    static getInstance() {
-        if (SongQueue.instance == null) {
-            SongQueue.instance = new SongQueue();
-        }
-        return SongQueue.instance;
-    }
+export class SongQueue {
+    //Queue interface
+    private static queue: Song[] = [];
+    static SongQueue: Discord.VoiceConnection;
 
-    private queue: Song[];
-
-    enqueue(item: Song): void {
+    static enqueue(item: Song): void {
         this.queue.push(item);
     }
-    dequeue(): Song | undefined {
+    static dequeue(): Song | undefined {
         return this.queue.shift();
     }
-    size(): number {
+    static size(): number {
         return this.queue.length;
+    }
+    static printSongs(): void {
+        console.log(this.queue);
     }
 }

@@ -13,7 +13,7 @@ export class Song {
         this.url = url;
     }
 
-    async fromUrl(url: string) {
+    static async fromUrl(url: string) {
         const songInfo = await getSongInfo(url);
         return new Song(
             songInfo.videoDetails.title,
