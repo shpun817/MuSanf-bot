@@ -13,6 +13,9 @@ const commands: Command[] = [
 ];
 
 export async function parseMessage(msg: Discord.Message) {
+    if (msg.author.bot) {
+        return;
+    }
     if (!msg.content.startsWith(prefix)) {
         return;
     }
