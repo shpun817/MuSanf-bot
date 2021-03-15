@@ -1,4 +1,5 @@
 import Discord = require('discord.js');
+import internal = require('node:stream');
 import ytdl = require('ytdl-core');
 import { SongQueue } from './song_queue';
 
@@ -26,8 +27,16 @@ export class Player {
         if (this.voiceChannelConnection === null) {
             return;
         }
+        let songInput: internal.Readable;
+        try {
+            songInput = ytdl(nextSong.url);
+        } catch (e) {
+            console.error(e);
+            await msg.channel.send(`**${nextSong.title}** cannot be played.`);
+            return;
+        }
         this.dispatcher = this.voiceChannelConnection
-            .play(ytdl(nextSong.url))
+            .play(songInput)
             .on('finish', () => {
                 // Play the next song recursively
                 this.playNextSong(msg);

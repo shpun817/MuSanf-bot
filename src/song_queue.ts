@@ -1,5 +1,4 @@
 import { Song } from "./song";
-import Discord = require('discord.js');
 
 export class SongQueue {
     //Queue interface

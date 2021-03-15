@@ -1,9 +1,5 @@
 import ytdl = require("ytdl-core");
 
-async function getSongInfo(url: string) {
-    return ytdl.getInfo(url);
-}
-
 export class Song {
     title: string;
     url: string;
@@ -13,11 +9,16 @@ export class Song {
         this.url = url;
     }
 
-    static async fromUrl(url: string) {
-        const songInfo = await getSongInfo(url);
-        return new Song(
-            songInfo.videoDetails.title,
-            songInfo.videoDetails.video_url,
-        );
+    static async fromUrl(url: string): Promise<Song | null> {
+        try {
+            const songInfo = await ytdl.getInfo(url);
+            return new Song(
+                songInfo.videoDetails.title,
+                songInfo.videoDetails.video_url,
+            );
+        } catch (e) {
+            console.error(e);
+            return null;
+        }
     }
 }
