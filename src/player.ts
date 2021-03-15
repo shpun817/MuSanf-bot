@@ -33,6 +33,7 @@ export class Player {
                 this.playNextSong(msg);
             })
             .on("error", async err => {
+                this.dispatcher = null;
                 await msg.channel.send("Some error encountered in playing song.");
                 console.error(err);
             });
