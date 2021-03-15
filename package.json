@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc -w & nodemon -w out out/app.js",
+    "start": "tsc -w & nodemon -w out -q out/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,6 +17,7 @@
     "ffmpeg": "^0.0.4",
     "ffmpeg-static": "^4.2.7",
     "fluent-ffmpeg": "^2.1.2",
+    "typescript": "^4.2.3",
     "ytdl-core": "^4.5.0"
   },
   "devDependencies": {
