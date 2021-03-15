@@ -6,6 +6,11 @@ export class Player {
     static voiceChannelConnection: Discord.VoiceConnection = null;
     static dispatcher: Discord.StreamDispatcher = null;
 
+    static reset() {
+        this.voiceChannelConnection = null;
+        this.dispatcher = null;
+    }
+
     static isPlaying() {
         return this.dispatcher !== null;
     }

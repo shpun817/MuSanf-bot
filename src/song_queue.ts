@@ -4,7 +4,10 @@ import Discord = require('discord.js');
 export class SongQueue {
     //Queue interface
     private static queue: Song[] = [];
-    static SongQueue: Discord.VoiceConnection;
+    
+    static clear(): void {
+        this.queue = [];
+    }
 
     static enqueue(item: Song): void {
         this.queue.push(item);
