@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc -w & nodemon -w out -q out/app.js",
+    "start": "node out/app.js",
+    "dev": "tsc -w & nodemon -w out -q out/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
