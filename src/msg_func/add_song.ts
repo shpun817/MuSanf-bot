@@ -13,7 +13,7 @@ export async function addSong(msg: Discord.Message, args: string[]) {
     const url = args[0];
     const song = await Song.fromUrl(url);
     SongQueue.enqueue(song);
-    msg.channel.send(`**${song.title}** has been added to the queue.`);
+    msg.channel.send(`**${song.title}** has been added. (${SongQueue.size()} in queue)`);
     SongQueue.printSongs();
     if (!Player.isPlaying()) {
         Player.playNextSong(msg);

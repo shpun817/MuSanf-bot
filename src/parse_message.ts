@@ -4,6 +4,7 @@ import { addSong } from './msg_func/add_song';
 import { nextSong } from './msg_func/next_song';
 import { reset } from './msg_func/reset';
 import { setVolume } from './msg_func/set_volume';
+import { showQueue } from './msg_func/show_queue';
 
 const prefix = '$';
 
@@ -18,6 +19,7 @@ const commands: Command[] = [
     {key: "next", func: nextSong},
     {key: "reset", func: reset},
     {key: "volume", func: setVolume},
+    {key: "queue", func: showQueue}
 ];
 
 export async function parseMessage(msg: Discord.Message) {
@@ -30,8 +32,9 @@ export async function parseMessage(msg: Discord.Message) {
     const inputLine = msg.content.substring(1).split(' ');
     commands.forEach(async (command) => {
         if (command.key === inputLine[0]) {
-            await joinVoiceChannel(msg);
-            await command.func(msg, inputLine.slice(1));
+            if (await joinVoiceChannel(msg)) {
+                await command.func(msg, inputLine.slice(1));
+            }
         }
     });
 }
