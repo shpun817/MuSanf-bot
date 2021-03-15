@@ -3,6 +3,7 @@ import { joinVoiceChannel } from './join_channel';
 import { addSong } from './msg_func/add_song';
 import { nextSong } from './msg_func/next_song';
 import { reset } from './msg_func/reset';
+import { setVolume } from './msg_func/set_volume';
 
 const prefix = '$';
 
@@ -16,6 +17,7 @@ const commands: Command[] = [
     {key: "play", func: addSong},
     {key: "next", func: nextSong},
     {key: "reset", func: reset},
+    {key: "volume", func: setVolume},
 ];
 
 export async function parseMessage(msg: Discord.Message) {
