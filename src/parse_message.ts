@@ -1,6 +1,7 @@
 import Discord = require('discord.js');
 import { joinVoiceChannel } from './join_channel';
-import { addSong } from './add_song';
+import { addSong } from './msg_func/add_song';
+import { nextSong } from './msg_func/next_song';
 
 const prefix = '$';
 
@@ -12,6 +13,7 @@ interface Command {
 const commands: Command[] = [
     {key: "dummy", func: (...a: any) => {}},
     {key: "play", func: addSong},
+    {key: "next", func: nextSong},
 ];
 
 export async function parseMessage(msg: Discord.Message) {

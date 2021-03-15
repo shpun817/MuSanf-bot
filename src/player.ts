@@ -4,25 +4,33 @@ import { SongQueue } from './song_queue';
 
 export class Player {
     static voiceChannelConnection: Discord.VoiceConnection = null;
-    static dispatcher = null;
+    static dispatcher: Discord.StreamDispatcher = null;
 
-    // Output messages to msgChannel
-    static async playNextSong(msgChannel: Discord.TextChannel | Discord.DMChannel | Discord.NewsChannel) {
+    static isPlaying() {
+        return this.dispatcher !== null;
+    }
+
+    // Output messages to msg.channel
+    static async playNextSong(msg: Discord.Message) {
         const nextSong = SongQueue.dequeue();
-        if (nextSong == undefined) {
-            await msgChannel.send("The queue has been emptied.");
+        if (nextSong === undefined) {
+            this.dispatcher = null;
+            await msg.channel.send("The queue has been emptied.");
+            return;
+        }
+        if (this.voiceChannelConnection === null) {
             return;
         }
         this.dispatcher = this.voiceChannelConnection
             .play(ytdl(nextSong.url))
             .on('finish', () => {
                 // Play the next song recursively
-                this.playNextSong(msgChannel);
+                this.playNextSong(msg);
             })
             .on("error", async err => {
-                await msgChannel.send("Some error encountered in playing song.");
+                await msg.channel.send("Some error encountered in playing song.");
                 console.error(err);
             });
-        await msgChannel.send(`Now Playing: **${nextSong.title}**`);
+        await msg.channel.send(`Now Playing: **${nextSong.title}**`);
     }
 }
