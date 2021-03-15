@@ -16,4 +16,6 @@ export async function joinVoiceChannel(msg: Discord.Message) {
     }
     console.log("Currently in", msg.client.voice.connections.size, "voice channels");
     Player.voiceChannelConnection = await userVoiceChannel.join();
+    // Deafen self
+    await msg.guild.me.voice.setSelfDeaf(true);
 }
