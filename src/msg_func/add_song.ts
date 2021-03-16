@@ -5,7 +5,8 @@ import { SongQueue } from '../song_queue';
 
 export async function addSong(msg: Discord.Message, args: string[]) {
     if (args.length != 1) {
-        return msg.channel.send("Please supply the url only.");
+        await msg.channel.send("Please supply the url only.");
+        return;
     }
     if (Player.voiceChannelConnection === null) {
         return;

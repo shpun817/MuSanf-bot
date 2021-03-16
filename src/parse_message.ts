@@ -34,6 +34,8 @@ export async function parseMessage(msg: Discord.Message) {
         if (command.key === inputLine[0]) {
             if (await joinVoiceChannel(msg)) {
                 await command.func(msg, inputLine.slice(1));
+            } else {
+                console.log("Command blocked by lack of voice channel");
             }
         }
     });
