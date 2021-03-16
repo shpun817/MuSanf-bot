@@ -1,6 +1,7 @@
 import Discord = require('discord.js');
 import { joinVoiceChannel } from './join_channel';
 import { addSong } from './msg_func/add_song';
+import { changeBitrate } from './msg_func/change_bitrate';
 import { nextSong } from './msg_func/next_song';
 import { reset } from './msg_func/reset';
 import { setVolume } from './msg_func/set_volume';
@@ -22,6 +23,7 @@ const commands: Command[] = [
     {key: "volume", alias: ["v"], func: setVolume},
     {key: "queue", alias: ["q"], func: showQueue},
     {key: "shuffle", alias: ["s"], func: shuffleQueue},
+    {key: "bitrate", alias: ["b"], func: changeBitrate},
 ];
 
 export async function parseMessage(msg: Discord.Message) {
@@ -31,10 +33,10 @@ export async function parseMessage(msg: Discord.Message) {
     if (!msg.content.startsWith(prefix)) {
         return;
     }
+    // The first token is the command key/alias and the rest are arguments
     const inputLine = msg.content.substring(1).split(' ');
     commands.forEach(async (command) => {
-        const keys = command.alias? [command.key, ...command.alias] : [command.key];
-        if (keys.includes(inputLine[0])) {
+        if (command.key === inputLine[0] || command.alias?.includes(inputLine[0])) {
             if (await joinVoiceChannel(msg)) {
                 await command.func(msg, inputLine.slice(1));
             } else {

@@ -1,9 +1,10 @@
 * [x] Show current queue
+* [ ] Show queue in multiple pages
 * [x] Add command aliases
 * [x] Store/Show song length
 * [ ] Support pause/resume
 * [x] Adjust volume scale
-* [ ] Adjust bit rate (lower data transfer rate)
+* [x] Adjust bit rate (lower data transfer rate)
 * [x] Shuffle queue
 * [ ] Non-requestor call next requires vote
 * [x] Disconnect after idle for some time

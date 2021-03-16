@@ -8,6 +8,7 @@ export class Player {
     static voiceChannelConnection: Discord.VoiceConnection = null;
     static dispatcher: Discord.StreamDispatcher = null; // A different dispatcher will be assigned for each song
     static volume: number = 40; // The (running) default volume, will be mapped from [0,100] to [0,1]
+    static bitrate: number = 96000;
 
     private static idleTimeout: NodeJS.Timeout = null;
 
@@ -72,7 +73,7 @@ export class Player {
             this.idleTimeout = null;
         }
         this.dispatcher = this.voiceChannelConnection
-            .play(songInput)
+            .play(songInput, {bitrate: this.bitrate})
             .on('finish', () => {
                 // Play the next song recursively
                 this.playNextSong(msg);
