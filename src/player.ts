@@ -36,7 +36,7 @@ export class Player {
         if (volume !== undefined) {
             this.volume = volume;
         }
-        this.dispatcher.setVolumeLogarithmic(this.volume/100); // Change volume of the current dispatcher
+        this.dispatcher?.setVolumeLogarithmic(this.volume/100); // Change volume of the current dispatcher
     }
 
     // Output messages to msg.channel
@@ -56,7 +56,7 @@ export class Player {
             return;
         }
         if (this.voiceChannelConnection === null) {
-            await msg.channel.send("No voice channel connection. Consider disconnecting the bot and try again.");
+            await msg.channel.send("No voice channel connection. Disconnect me and try again.");
             return;
         }
         let songInput: internal.Readable;
@@ -79,11 +79,11 @@ export class Player {
             })
             .on("error", async err => {
                 this.dispatcher = null;
-                await msg.channel.send(`Some error encountered in playing **${nextSong.title}**.`);
+                await msg.channel.send(`Something went wrong when I try to play **${nextSong.title}**.`);
                 console.error(err);
                 this.playNextSong(msg);
             });
         this.setVolume();
-        await msg.channel.send(`Now Playing: **${nextSong.title}**`);
+        await msg.channel.send(`Coming up next: **${nextSong.title}**`);
     }
 }

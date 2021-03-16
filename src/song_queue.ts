@@ -1,7 +1,6 @@
 import { Song } from "./song";
 
 export class SongQueue {
-    //Queue interface
     private static queue: Song[] = [];
 
     static getQueue(): readonly Song[] {

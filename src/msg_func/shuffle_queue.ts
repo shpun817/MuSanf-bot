@@ -3,6 +3,6 @@ import { SongQueue } from '../song_queue';
 
 export async function shuffleQueue(msg: Discord.Message, args: string[]) {
     SongQueue.shuffle();
-    msg.channel.send("The queue has been shuffled.");
+    await msg.channel.send("My little cousins came over and the queue is total chaos...");
     return;
 }

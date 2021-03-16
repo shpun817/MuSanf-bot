@@ -6,7 +6,7 @@ export async function showQueue(msg: Discord.Message, args: string[]) {
     const queue = SongQueue.getQueue();
 
     if (queue.length === 0) {
-        return msg.channel.send("The queue is empty, add more ;D?");
+        return msg.channel.send("Nothing in the queue, add more ;D?");
     }
 
     let result = "```\n";

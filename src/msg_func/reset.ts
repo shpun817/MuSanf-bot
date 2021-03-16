@@ -9,13 +9,13 @@ export async function reset(msg: Discord.Message | null, args: string[]) {
     if (empty || args.includes('player')) {
         Player.reset();
         if (!silent && msg !== null) {
-            await msg.channel.send("Player is reset.");
+            await msg.channel.send("Mom just got me a new Player!");
         }
     }
     if (empty || args.includes('queue')) {
         SongQueue.clear();
         if (!silent && msg !== null) {
-            await msg.channel.send("The song queue has been cleared.");
+            await msg.channel.send("The song queue is good as *new*.");
         }
     }
     return;
