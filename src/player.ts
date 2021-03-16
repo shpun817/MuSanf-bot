@@ -60,8 +60,9 @@ export class Player {
             })
             .on("error", async err => {
                 this.dispatcher = null;
-                await msg.channel.send("Some error encountered in playing song.");
+                await msg.channel.send(`Some error encountered in playing **${nextSong.title}**.`);
                 console.error(err);
+                this.playNextSong(msg);
             });
         this.setVolume();
         await msg.channel.send(`Now Playing: **${nextSong.title}**`);
