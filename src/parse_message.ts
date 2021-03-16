@@ -10,16 +10,17 @@ const prefix = '$';
 
 interface Command {
     key: string;
-    func: (msg: Discord.Message, args: string[]) => (Promise<Discord.Message> | void);
+    alias?: string[];
+    func: (msg: Discord.Message, args: string[]) => (Promise<Discord.Message> | Promise<void> | void);
 }
 
 const commands: Command[] = [
     {key: "dummy", func: (...a: any) => {}},
-    {key: "play", func: addSong},
-    {key: "next", func: nextSong},
-    {key: "reset", func: reset},
-    {key: "volume", func: setVolume},
-    {key: "queue", func: showQueue}
+    {key: "play", alias: ["p"], func: addSong},
+    {key: "next", alias: ["n"], func: nextSong},
+    {key: "reset", alias: ["r"], func: reset},
+    {key: "volume", alias: ["v"], func: setVolume},
+    {key: "queue", alias: ["q"], func: showQueue}
 ];
 
 export async function parseMessage(msg: Discord.Message) {
@@ -31,7 +32,8 @@ export async function parseMessage(msg: Discord.Message) {
     }
     const inputLine = msg.content.substring(1).split(' ');
     commands.forEach(async (command) => {
-        if (command.key === inputLine[0]) {
+        const keys = command.alias? [command.key, ...command.alias] : [command.key];
+        if (keys.includes(inputLine[0])) {
             if (await joinVoiceChannel(msg)) {
                 await command.func(msg, inputLine.slice(1));
             } else {
