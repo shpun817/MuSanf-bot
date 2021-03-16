@@ -6,7 +6,7 @@ import { SongQueue } from './song_queue';
 export class Player {
     static voiceChannelConnection: Discord.VoiceConnection = null;
     static dispatcher: Discord.StreamDispatcher = null; // A different dispatcher will be assigned for each song
-    static volume: number = 50; // The (running) default volume, will be mapped from [0,100] to [0,1]
+    static volume: number = 40; // The (running) default volume, will be mapped from [0,100] to [0,1]
 
     static reset() {
         this.voiceChannelConnection = null;
