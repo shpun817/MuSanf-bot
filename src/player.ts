@@ -1,6 +1,7 @@
 import Discord = require('discord.js');
 import internal = require('node:stream');
 import ytdl = require('ytdl-core');
+import { reset } from './msg_func/reset';
 import { SongQueue } from './song_queue';
 
 export class Player {
@@ -8,9 +9,15 @@ export class Player {
     static dispatcher: Discord.StreamDispatcher = null; // A different dispatcher will be assigned for each song
     static volume: number = 40; // The (running) default volume, will be mapped from [0,100] to [0,1]
 
+    private static idleTimeout: NodeJS.Timeout = null;
+
     static reset() {
         this.voiceChannelConnection = null;
         this.dispatcher = null;
+        if (this.idleTimeout !== null) {
+            clearTimeout(this.idleTimeout);
+            this.idleTimeout = null;
+        }
     }
 
     static isPlaying() {
@@ -38,6 +45,14 @@ export class Player {
         if (nextSong === undefined) {
             this.dispatcher = null;
             await msg.channel.send("The queue has been emptied.");
+            await msg.channel.send("Disconnecting in 30 seconds...");
+            if (this.idleTimeout !== null) {
+                clearTimeout(this.idleTimeout);
+            }
+            this.idleTimeout = setTimeout(async () => {
+                await msg.channel.send("Au Revoir!");
+                reset(msg, ['player', 'queue', 'silent']);
+            }, 30*1000);
             return;
         }
         if (this.voiceChannelConnection === null) {
@@ -51,6 +66,10 @@ export class Player {
             console.error(e);
             await msg.channel.send(`**${nextSong.title}** cannot be played.`);
             return;
+        }
+        if (this.idleTimeout !== null) {
+            clearTimeout(this.idleTimeout);
+            this.idleTimeout = null;
         }
         this.dispatcher = this.voiceChannelConnection
             .play(songInput)
