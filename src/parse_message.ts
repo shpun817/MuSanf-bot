@@ -16,7 +16,6 @@ interface Command {
 }
 
 const commands: Command[] = [
-    {key: "dummy", func: (...a: any) => {}},
     {key: "play", alias: ["p"], func: addSong},
     {key: "next", alias: ["n"], func: nextSong},
     {key: "reset", alias: ["r"], func: reset},
