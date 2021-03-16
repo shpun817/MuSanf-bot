@@ -7,7 +7,7 @@
 * [x] Shuffle queue
 * [ ] Non-requestor call next requires vote
 * [x] Disconnect after idle for some time
-* [ ] Disconnect after everyone in the voice channel has left
+* [x] Disconnect after everyone in the voice channel has left
 * [ ] Save & Load playlist
 * [ ] Add Spotify URL support
 * [ ] Inform at 10s before song end (so that user know when to skip)
