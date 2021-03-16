@@ -12,7 +12,7 @@ export async function showQueue(msg: Discord.Message, args: string[]) {
     let result = "```\n";
     
     for (let i = 0; i < queue.length; ++i) {
-        result += `${i+1}) ${queue[i].title}\n`;
+        result += `${i+1}) ${queue[i].title} (${queue[i].getLengthFormatted()})\n`;
     }
 
     result += "```\n";

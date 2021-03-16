@@ -1,6 +1,6 @@
 * [x] Show current queue
 * [x] Add command aliases
-* [ ] Store/Show song length
+* [x] Store/Show song length
 * [ ] Support pause/resume
 * [x] Adjust volume scale
 * [ ] Adjust bit rate (lower data transfer rate)

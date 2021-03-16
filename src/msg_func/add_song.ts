@@ -17,7 +17,7 @@ export async function addSong(msg: Discord.Message, args: string[]) {
         msg.reply("I can't add this song for some reason.");
     } else {
         SongQueue.enqueue(song);
-        msg.channel.send(`**${song.title}** just squeezed in the queue. (${SongQueue.size()} in queue)`);
+        msg.channel.send(`**${song.title}** (${song.getLengthFormatted()}) just squeezed in the queue. (${SongQueue.size()} in queue)`);
         SongQueue.printSongs();
         if (!Player.isPlaying()) {
             Player.playNextSong(msg);
