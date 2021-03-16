@@ -12,6 +12,13 @@ export class SongQueue {
         this.queue = [];
     }
 
+    static shuffle(): void {
+        for (let i = 0; i < this.queue.length; ++i) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.queue[i], this.queue[j]] = [this.queue[j], this.queue[i]];
+        }
+    }
+
     static enqueue(item: Song): void {
         this.queue.push(item);
     }

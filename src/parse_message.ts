@@ -5,6 +5,7 @@ import { nextSong } from './msg_func/next_song';
 import { reset } from './msg_func/reset';
 import { setVolume } from './msg_func/set_volume';
 import { showQueue } from './msg_func/show_queue';
+import { shuffleQueue } from './msg_func/shuffle_queue';
 
 const prefix = '$';
 
@@ -20,7 +21,8 @@ const commands: Command[] = [
     {key: "next", alias: ["n"], func: nextSong},
     {key: "reset", alias: ["r"], func: reset},
     {key: "volume", alias: ["v"], func: setVolume},
-    {key: "queue", alias: ["q"], func: showQueue}
+    {key: "queue", alias: ["q"], func: showQueue},
+    {key: "shuffle", alias: ["s"], func: shuffleQueue},
 ];
 
 export async function parseMessage(msg: Discord.Message) {
