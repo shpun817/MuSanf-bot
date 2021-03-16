@@ -5,7 +5,8 @@ import { SongQueue } from './song_queue';
 
 export class Player {
     static voiceChannelConnection: Discord.VoiceConnection = null;
-    static dispatcher: Discord.StreamDispatcher = null;
+    static dispatcher: Discord.StreamDispatcher = null; // A different dispatcher will be assigned for each song
+    static volume: number = 50; // The (running) default volume, will be mapped from [0,100] to [0,1]
 
     static reset() {
         this.voiceChannelConnection = null;
@@ -14,6 +15,21 @@ export class Player {
 
     static isPlaying() {
         return this.dispatcher !== null;
+    }
+
+    static getVolume(): number {
+        if (((this.volume/100) - this.dispatcher.volumeLogarithmic) > 0.01) {
+            console.error("Error in Player: volume property and dispatcher volume do not agree!");
+            console.error(`Volume property is ${this.volume} and dispatcher volume is ${this.dispatcher.volumeLogarithmic}.`);
+        }
+        return this.volume;
+    }
+
+    static setVolume(volume?: number) {
+        if (volume !== undefined) {
+            this.volume = volume;
+        }
+        this.dispatcher.setVolumeLogarithmic(this.volume/100); // Change volume of the current dispatcher
     }
 
     // Output messages to msg.channel
@@ -25,6 +41,7 @@ export class Player {
             return;
         }
         if (this.voiceChannelConnection === null) {
+            await msg.channel.send("No voice channel connection. Consider disconnecting the bot and try again.");
             return;
         }
         let songInput: internal.Readable;
@@ -46,7 +63,7 @@ export class Player {
                 await msg.channel.send("Some error encountered in playing song.");
                 console.error(err);
             });
-        this.dispatcher.setVolume(4 / 100);
+        this.setVolume();
         await msg.channel.send(`Now Playing: **${nextSong.title}**`);
     }
 }

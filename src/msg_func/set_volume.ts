@@ -2,15 +2,18 @@ import Discord = require('discord.js');
 import { Player } from '../player';
 
 export async function setVolume(msg: Discord.Message, args: string[]) {
+    if (args.length === 0) {
+        await msg.channel.send(`Current volume is ${Player.getVolume()}`);
+        return;
+    }
     try {
         let newVolume = parseFloat(args[0]);
-        if (newVolume < 0 || newVolume > 200) {
+        if (!isFinite(newVolume) || newVolume < 0 || newVolume > 100) {
             throw new Error();
         }
         await msg.channel.send(`Setting volume to ${newVolume}`);
-        // 0.5 is half, 1 is normal, 2 is double
-        Player.dispatcher.setVolume(newVolume / 100);
+        Player.setVolume(newVolume);
     } catch (_) {
-        await msg.channel.send("Please input a valid volume (0-200).");
+        await msg.channel.send("Please input a valid volume (0-100).");
     }
 }
