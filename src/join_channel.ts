@@ -1,4 +1,5 @@
 import Discord = require('discord.js');
+import { reset } from './msg_func/reset';
 import { Player } from './player';
 
 // Returns true if bot successfully joins the voice channel of the author
@@ -10,6 +11,10 @@ export async function joinVoiceChannel(msg: Discord.Message) {
         );
         return false;
     }
+    if (msg.guild.me.voice.channel?.equals(userVoiceChannel)) {
+        console.log("Already in the same channel.");
+        return true;
+    }
     const permissions = userVoiceChannel.permissionsFor(msg.client.user);
     if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
         await msg.reply(
@@ -17,6 +22,7 @@ export async function joinVoiceChannel(msg: Discord.Message) {
         );
         return false;
     }
+    reset(null, ["player", "queue"]);
     console.log("Currently in", msg.client.voice.connections.size, "voice channels");
     Player.voiceChannelConnection = await userVoiceChannel.join();
     // Deafen self
