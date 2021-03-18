@@ -2,6 +2,7 @@ import Discord = require('discord.js');
 import { joinVoiceChannel } from './join_channel';
 import { addSong } from './msg_func/add_song';
 import { changeBitrate } from './msg_func/change_bitrate';
+import { changeIdle } from './msg_func/change_idle';
 import { nextSong } from './msg_func/next_song';
 import { reset } from './msg_func/reset';
 import { setVolume } from './msg_func/set_volume';
@@ -24,6 +25,7 @@ const commands: Command[] = [
     {key: "queue", alias: ["q"], func: showQueue},
     {key: "shuffle", alias: ["s"], func: shuffleQueue},
     {key: "bitrate", alias: ["b"], func: changeBitrate},
+    {key: "idle", alias: ["i"], func: changeIdle},
 ];
 
 export async function parseMessage(msg: Discord.Message) {

@@ -9,6 +9,7 @@ export class Player {
     static dispatcher: Discord.StreamDispatcher = null; // A different dispatcher will be assigned for each song
     static volume: number = 40; // The (running) default volume, will be mapped from [0,100] to [0,1]
     static bitrate: number = 96000;
+    static idleTime: number = 60*1000; // Time of idle before disconnecting (in ms)
 
     private static idleTimeout: NodeJS.Timeout = null;
 
@@ -23,6 +24,18 @@ export class Player {
 
     static isPlaying() {
         return this.dispatcher !== null;
+    }
+
+    static getIdleTimeSeconds(): number {
+        return this.idleTime/1000;
+    }
+
+    static setIdleTimeSeconds(seconds: number) {
+        this.idleTime = seconds*1000;
+        if (this.idleTimeout !== null) {
+            clearTimeout(this.idleTimeout);
+            this.idleTimeout = setTimeout(() => {}, this.idleTime);
+        }
     }
 
     static getVolume(): number {
@@ -46,14 +59,14 @@ export class Player {
         if (nextSong === undefined) {
             this.dispatcher = null;
             await msg.channel.send("The queue has been emptied.");
-            await msg.channel.send("Disconnecting in 30 seconds...");
+            await msg.channel.send(`Disconnecting in ${this.getIdleTimeSeconds()} seconds...`);
             if (this.idleTimeout !== null) {
                 clearTimeout(this.idleTimeout);
             }
             this.idleTimeout = setTimeout(async () => {
                 await msg.channel.send("Au Revoir!");
                 reset(msg, ['player', 'queue', 'silent']);
-            }, 30*1000);
+            }, this.idleTime);
             return;
         }
         if (this.voiceChannelConnection === null) {
