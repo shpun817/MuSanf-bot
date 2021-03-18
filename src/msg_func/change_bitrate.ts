@@ -14,5 +14,6 @@ export async function changeBitrate(msg: Discord.Message, args: string[]) {
         await msg.channel.send(`I will play the next song at bitrate ${bitrate}.`);
     } catch (e) {
         await msg.reply(e);
+        return;
     }
 }
