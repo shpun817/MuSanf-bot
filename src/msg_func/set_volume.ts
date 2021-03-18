@@ -10,10 +10,10 @@ export async function setVolume(msg: Discord.Message, args: string[]) {
     try {
         newVolume = parseFloat(args[0]);
         if (!isFinite(newVolume) || newVolume < 0 || newVolume > 100) {
-            throw new Error("Please input a valid volume (0-100).");
+            throw new Error();
         }
-    } catch (e) {
-        await msg.channel.send(e);
+    } catch (_) {
+        await msg.channel.send("Please input a valid volume (0-100).");
         return;
     }
     
